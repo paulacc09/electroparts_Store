@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ElectroParts - Tienda de componentes electrónicos: transformadores, resistencias, capacitores y más." />
+  <title>ElectroParts | Componentes Electrónicos</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/accessibility.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- WCAG 4.1 Skip links -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main-nav" class="skip-link">Saltar a la navegación</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+
+      <!-- WCAG 1.1.1 Logo con alt -->
+      <a href="index.html" class="logo" aria-label="ElectroParts - Inicio">
+        <span class="logo-text" aria-hidden="true">⚡</span>
+        <span>ElectroParts</span>
+      </a>
+
+      <!-- WCAG 3.2.4 Búsqueda consistente -->
+      <div class="header-search" role="search">
+        <form action="pages/productos.html" method="get" aria-label="Buscar productos">
+          <label for="search-input" class="visually-hidden">Buscar componentes electrónicos</label>
+          <input
+            id="search-input"
+            type="search"
+            name="q"
+            placeholder="Buscar: resistencias, condensadores..."
+            autocomplete="off"
+            aria-describedby="search-hint"
+          />
+          <span id="search-hint" class="visually-hidden">Escribe el nombre del componente que buscas</span>
+          <button type="submit" aria-label="Ejecutar búsqueda">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="header-actions">
+        <!-- WCAG 1.3.1 Contador carrito con aria-live -->
+        <a href="pages/carrito.html" class="btn-cart" aria-label="Carrito de compras, 3 artículos">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" aria-live="polite" aria-atomic="true">3</span>
+        </a>
+        <button class="btn-menu" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- WCAG 2.4.1 Navegación etiquetada -->
+    <nav id="main-nav" class="main-nav" role="navigation" aria-label="Navegación principal">
+      <div class="container">
+        <ul class="nav-list" role="list">
+          <li><a href="index.html" aria-current="page">Inicio</a></li>
+          <li><a href="pages/productos.html">Categorías</a></li>
+          <li><a href="pages/productos.html">Productos</a></li>
+          <li><a href="#ofertas">Ofertas</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" role="img" aria-label="Circuito electrónico con componentes sobre fondo oscuro"></div>
+      <div class="container hero-content">
+        <h1 id="hero-title">Componentes Electrónicos de Alta Calidad</h1>
+        <p class="hero-subtitle">Resistencias, transformadores, capacitores y más. Envío a todo el país.</p>
+        <div class="hero-actions">
+          <a href="pages/productos.html" class="btn btn-primary">Ver catálogo completo</a>
+          <a href="#categorias" class="btn btn-secondary">Explorar categorías</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WCAG 1.4.1 Anuncio no solo por color -->
+    <div class="announcement-bar" role="region" aria-label="Anuncio de envío gratis">
+      <div class="container">
+        <p>
+          <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <strong>Envío gratis</strong> en compras mayores a $50.000
+          <span class="badge-highlight"> — ¡Solo esta semana!</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS (WCAG 1.3.1 listas semánticas) -->
+    <section class="section categories-section" id="categorias" aria-labelledby="categorias-title">
+      <div class="container">
+        <h2 id="categorias-title" class="section-title">Nuestras Categorías</h2>
+        <p class="section-subtitle">Encuentra exactamente el componente que necesitas</p>
+        <ul class="categories-grid" role="list" aria-label="Categorías de productos electrónicos">
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=resistencias" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="9" width="20" height="6" rx="1"/>
+                  <line x1="0" y1="12" x2="2" y2="12"/><line x1="22" y1="12" x2="24" y2="12"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Resistencias</h3>
+              <p class="category-desc">Carbón, metal, SMD y más</p>
+              <span class="category-count">240 productos</span>
+            </a>
+          </li>
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=capacitores" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/>
+                  <line x1="8" y1="6" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="18"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Capacitores</h3>
+              <p class="category-desc">Electrolíticos, cerámicos, de película</p>
+              <span class="category-count">185 productos</span>
+            </a>
+          </li>
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=transformadores" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>
+                  <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Transformadores</h3>
+              <p class="category-desc">Potencia, audio y pulsos</p>
+              <span class="category-count">98 productos</span>
+            </a>
+          </li>
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=transistores" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="6" y1="3" x2="6" y2="21"/><line x1="2" y1="12" x2="6" y2="12"/>
+                  <line x1="6" y1="8" x2="14" y2="4"/><line x1="6" y1="16" x2="14" y2="20"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Transistores</h3>
+              <p class="category-desc">BJT, MOSFET, IGBT y más</p>
+              <span class="category-count">320 productos</span>
+            </a>
+          </li>
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=diodos" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="2 12 8 5 8 19 2 12"/>
+                  <line x1="8" y1="12" x2="22" y2="12"/><line x1="16" y1="6" x2="16" y2="18"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Diodos</h3>
+              <p class="category-desc">Zener, Schottky, LED y rectificadores</p>
+              <span class="category-count">210 productos</span>
+            </a>
+          </li>
+
+          <li class="category-card">
+            <a href="pages/productos.html?cat=microcontroladores" class="category-link">
+              <div class="category-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+                  <line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/>
+                  <line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/>
+                </svg>
+              </div>
+              <h3 class="category-name">Microcontroladores</h3>
+              <p class="category-desc">Arduino, PIC, STM32 y módulos</p>
+              <span class="category-count">150 productos</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section class="section products-section" id="productos-destacados" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="featured-title" class="section-title">Productos Destacados</h2>
+          <a href="pages/productos.html" class="btn btn-outline" aria-label="Ver todos los productos">Ver todos</a>
+        </div>
+
+        <ul class="products-grid" role="list" aria-label="Productos destacados">
+
+          <!-- Producto 1 -->
+          <li class="product-card" aria-labelledby="prod-name-1">
+            <article>
+              <div class="product-img-wrapper">
+                <!-- WCAG 1.1.1 alt descriptivo -->
+                <img
+                  src="assets/images/resistencia-carbon.jpg"
+                  alt="Kit de resistencias de carbón 1/4W, 100 piezas surtidas con valores desde 10 ohmios hasta 1 Megaohmio"
+                  width="300" height="200" loading="lazy" class="product-img"
+                />
+                <!-- WCAG 1.4.1 Badge con texto, no solo color -->
+                <span class="badge badge-new" aria-label="Producto nuevo">Nuevo</span>
+              </div>
+              <div class="product-info">
+                <p class="product-category">Resistencias</p>
+                <h3 id="prod-name-1" class="product-name">
+                  <a href="pages/detalle-producto.html?id=1">Resistencias Carbón 1/4W Kit 100 piezas</a>
+                </h3>
+                <!-- WCAG 1.3.1 Rating accesible -->
+                <div class="product-rating" role="img" aria-label="Calificación: 4.5 de 5 estrellas, 128 opiniones">
+                  <span class="stars" aria-hidden="true">★★★★½</span>
+                  <span class="rating-count">(128)</span>
+                </div>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $12.500">$12.500</span>
+                  <span class="product-price-old"><del aria-label="Precio anterior: $15.000">$15.000</del></span>
+                </div>
+                <button class="btn btn-primary btn-add-cart"
+                  aria-label="Agregar Resistencias Carbón Kit 100 piezas al carrito"
+                  data-product-id="1">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+
+          <!-- Producto 2 -->
+          <li class="product-card" aria-labelledby="prod-name-2">
+            <article>
+              <div class="product-img-wrapper">
+                <img
+                  src="assets/images/transformador-220.jpg"
+                  alt="Transformador de potencia 220V a 12V 1 Amperio, núcleo de hierro laminado"
+                  width="300" height="200" loading="lazy" class="product-img"
+                />
+                <span class="badge badge-sale" aria-label="En oferta">Oferta</span>
+              </div>
+              <div class="product-info">
+                <p class="product-category">Transformadores</p>
+                <h3 id="prod-name-2" class="product-name">
+                  <a href="pages/detalle-producto.html?id=2">Transformador 220V / 12V 1A</a>
+                </h3>
+                <div class="product-rating" role="img" aria-label="Calificación: 5 de 5 estrellas, 64 opiniones">
+                  <span class="stars" aria-hidden="true">★★★★★</span>
+                  <span class="rating-count">(64)</span>
+                </div>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $28.000">$28.000</span>
+                  <span class="product-price-old"><del aria-label="Precio anterior: $35.000">$35.000</del></span>
+                </div>
+                <button class="btn btn-primary btn-add-cart"
+                  aria-label="Agregar Transformador 220V 12V 1A al carrito"
+                  data-product-id="2">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+
+          <!-- Producto 3 -->
+          <li class="product-card" aria-labelledby="prod-name-3">
+            <article>
+              <div class="product-img-wrapper">
+                <img
+                  src="assets/images/capacitor-electrolitico.jpg"
+                  alt="Capacitor electrolítico 1000µF 25V, encapsulado cilíndrico negro"
+                  width="300" height="200" loading="lazy" class="product-img"
+                />
+              </div>
+              <div class="product-info">
+                <p class="product-category">Capacitores</p>
+                <h3 id="prod-name-3" class="product-name">
+                  <a href="pages/detalle-producto.html?id=3">Capacitor Electrolítico 1000µF 25V</a>
+                </h3>
+                <div class="product-rating" role="img" aria-label="Calificación: 4 de 5 estrellas, 47 opiniones">
+                  <span class="stars" aria-hidden="true">★★★★☆</span>
+                  <span class="rating-count">(47)</span>
+                </div>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $4.500">$4.500</span>
+                </div>
+                <button class="btn btn-primary btn-add-cart"
+                  aria-label="Agregar Capacitor Electrolítico 1000µF 25V al carrito"
+                  data-product-id="3">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+
+          <!-- Producto 4 -->
+          <li class="product-card" aria-labelledby="prod-name-4">
+            <article>
+              <div class="product-img-wrapper">
+                <img
+                  src="assets/images/arduino-uno.jpg"
+                  alt="Arduino UNO R3 con microcontrolador ATmega328, placa de desarrollo azul"
+                  width="300" height="200" loading="lazy" class="product-img"
+                />
+                <span class="badge badge-popular" aria-label="Producto más vendido">Popular</span>
+              </div>
+              <div class="product-info">
+                <p class="product-category">Microcontroladores</p>
+                <h3 id="prod-name-4" class="product-name">
+                  <a href="pages/detalle-producto.html?id=4">Arduino UNO R3 ATmega328</a>
+                </h3>
+                <div class="product-rating" role="img" aria-label="Calificación: 5 de 5 estrellas, 312 opiniones">
+                  <span class="stars" aria-hidden="true">★★★★★</span>
+                  <span class="rating-count">(312)</span>
+                </div>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $45.000">$45.000</span>
+                </div>
+                <button class="btn btn-primary btn-add-cart"
+                  aria-label="Agregar Arduino UNO R3 al carrito"
+                  data-product-id="4">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- WCAG 1.2 - MULTIMEDIA: VIDEO CON CONTROLES -->
+    <section class="section media-section" aria-labelledby="media-title">
+      <div class="container media-layout">
+        <div class="media-text">
+          <h2 id="media-title" class="section-title">¿Por qué elegir ElectroParts?</h2>
+          <p>Distribuidores directos de componentes certificados con datasheet descargable y garantía.</p>
+          <ul class="features-list" role="list">
+            <li><span aria-hidden="true">✔</span> Más de 1.000 referencias disponibles</li>
+            <li><span aria-hidden="true">✔</span> Envío en 24–48 horas</li>
+            <li><span aria-hidden="true">✔</span> Soporte técnico especializado</li>
+            <li><span aria-hidden="true">✔</span> Datasheets y tutoriales incluidos</li>
+          </ul>
+        </div>
+
+        <div class="media-video">
+          <figure>
+            <!-- WCAG 1.2.2 subtítulos, 1.2.3 audiodescripción -->
+            <video
+              id="promo-video"
+              width="560" height="315"
+              controls
+              preload="metadata"
+              poster="assets/images/video-poster.jpg"
+            >
+              <source src="assets/video/electroparts-promo.mp4" type="video/mp4" />
+              <source src="assets/video/electroparts-promo.webm" type="video/webm" />
+              <!-- WCAG 1.2.2 Subtítulos para sordos -->
+              <track kind="subtitles" src="assets/video/subtitulos-es.vtt" srclang="es" label="Español" default />
+              <!-- WCAG 1.2.3 Audiodescripción -->
+              <track kind="descriptions" src="assets/video/audiodescripcion.vtt" srclang="es" label="Audiodescripción" />
+              <p>Tu navegador no soporta video HTML5. <a href="assets/video/electroparts-promo.mp4">Descarga el video</a> o lee la <a href="#transcript-video">transcripción</a>.</p>
+            </video>
+            <figcaption>Video: Recorrido por el catálogo y proceso de envío de ElectroParts.</figcaption>
+          </figure>
+
+          <!-- WCAG 1.2.1 Alternativa textual -->
+          <details id="transcript-video" class="transcript-block">
+            <summary>Ver transcripción del video</summary>
+            <div class="transcript-content">
+              <p><strong>[0:00]</strong> Bienvenido a ElectroParts, tu tienda de componentes electrónicos.</p>
+              <p><strong>[0:05]</strong> Tenemos más de 1.000 referencias: resistencias, capacitores, transformadores y más.</p>
+              <p><strong>[0:12]</strong> Todos nuestros productos cuentan con datasheet descargable y garantía.</p>
+              <p><strong>[0:18]</strong> Realiza tu pedido en línea y recíbelo en 24 a 48 horas en todo el país.</p>
+              <p><strong>[0:25]</strong> ¡Visítanos en electroparts.com y comienza tu proyecto hoy!</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- WCAG 1.2.1 - SOLO AUDIO con transcripción -->
+    <section class="section audio-section" aria-labelledby="audio-title">
+      <div class="container">
+        <h2 id="audio-title" class="section-title">Podcast ElectroParts</h2>
+        <p class="section-subtitle">Aprende sobre electrónica mientras esperas tu pedido</p>
+        <div class="audio-player-wrapper">
+          <figure class="audio-figure">
+            <figcaption><strong>Episodio 1:</strong> Cómo elegir la resistencia correcta para tu circuito</figcaption>
+            <audio controls preload="metadata">
+              <source src="assets/audio/podcast-ep1.mp3" type="audio/mpeg" />
+              <source src="assets/audio/podcast-ep1.ogg" type="audio/ogg" />
+              <p>Tu navegador no soporta audio HTML5. <a href="assets/audio/podcast-ep1.mp3">Descarga el episodio</a>.</p>
+            </audio>
+          </figure>
+          <!-- WCAG 1.2.1 transcripción audio -->
+          <details class="transcript-block">
+            <summary>Ver transcripción del episodio</summary>
+            <div class="transcript-content">
+              <p><strong>[0:00]</strong> Hola, bienvenidos. Soy Carlos, ingeniero electrónico de ElectroParts.</p>
+              <p><strong>[0:08]</strong> Hoy aprenderemos a calcular resistencias con la ley de Ohm: R = V / I.</p>
+              <p><strong>[0:15]</strong> Para un LED de 2V con fuente de 5V a 20mA: R = (5-2) / 0.02 = 150 ohmios.</p>
+              <p><strong>[0:30]</strong> Encuentra nuestro surtido completo en electroparts.com</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABLA COMPARATIVA (WCAG 1.3.1 tablas semánticas) -->
+    <section class="section compare-section" aria-labelledby="compare-title">
+      <div class="container">
+        <h2 id="compare-title" class="section-title">Comparativa de Transformadores</h2>
+        <div class="table-wrapper" role="region" aria-label="Tabla comparativa de transformadores" tabindex="0">
+          <table class="compare-table">
+            <caption>Características técnicas de transformadores disponibles en stock</caption>
+            <thead>
+              <tr>
+                <th scope="col">Modelo</th>
+                <th scope="col">Entrada</th>
+                <th scope="col">Salida</th>
+                <th scope="col">Potencia</th>
+                <th scope="col">Precio</th>
+                <!-- WCAG 1.4.1 estado con texto + símbolo, no solo color -->
+                <th scope="col">Disponibilidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">TR-220-12-1A</th>
+                <td>220V AC</td><td>12V AC</td><td>12W</td><td>$28.000</td>
+                <td><span class="status status-available" aria-label="En stock">● En stock</span></td>
+              </tr>
+              <tr>
+                <th scope="row">TR-220-24-2A</th>
+                <td>220V AC</td><td>24V AC</td><td>48W</td><td>$52.000</td>
+                <td><span class="status status-available" aria-label="En stock">● En stock</span></td>
+              </tr>
+              <tr>
+                <th scope="row">TR-220-5-3A</th>
+                <td>220V AC</td><td>5V DC</td><td>15W</td><td>$38.000</td>
+                <td><span class="status status-limited" aria-label="Últimas unidades">◐ Últimas unidades</span></td>
+              </tr>
+              <tr>
+                <th scope="row">TR-110-12-5A</th>
+                <td>110V AC</td><td>12V AC</td><td>60W</td><td>$75.000</td>
+                <td><span class="status status-unavailable" aria-label="Agotado">○ Agotado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFERTAS -->
+    <section class="section offers-section" id="ofertas" aria-labelledby="offers-title">
+      <div class="container">
+        <h2 id="offers-title" class="section-title">Ofertas de la Semana</h2>
+        <ul class="offers-grid" role="list" aria-label="Ofertas especiales">
+          <li class="offer-card" aria-labelledby="offer-name-1">
+            <article>
+              <img src="assets/images/kit-transistores.jpg"
+                alt="Kit surtido de transistores NPN y PNP, 200 piezas en caja organizadora"
+                width="300" height="180" loading="lazy" class="offer-img" />
+              <div class="offer-info">
+                <h3 id="offer-name-1" class="offer-name">Kit Transistores NPN/PNP 200 piezas</h3>
+                <div class="offer-price-group">
+                  <span class="offer-discount" aria-label="Descuento 30 por ciento">−30%</span>
+                  <span class="offer-price" aria-label="Precio oferta $35.000">$35.000</span>
+                  <del class="offer-original" aria-label="Precio anterior $50.000">$50.000</del>
+                </div>
+                <button class="btn btn-primary" aria-label="Comprar Kit Transistores NPN/PNP">Comprar ahora</button>
+              </div>
+            </article>
+          </li>
+          <li class="offer-card" aria-labelledby="offer-name-2">
+            <article>
+              <img src="assets/images/kit-diodos.jpg"
+                alt="Surtido de diodos zener y rectificadores, 100 piezas en bolsa resellable"
+                width="300" height="180" loading="lazy" class="offer-img" />
+              <div class="offer-info">
+                <h3 id="offer-name-2" class="offer-name">Surtido Diodos Zener + Rectificadores</h3>
+                <div class="offer-price-group">
+                  <span class="offer-discount" aria-label="Descuento 20 por ciento">−20%</span>
+                  <span class="offer-price" aria-label="Precio oferta $18.000">$18.000</span>
+                  <del class="offer-original" aria-label="Precio anterior $22.500">$22.500</del>
+                </div>
+                <button class="btn btn-primary" aria-label="Comprar Surtido Diodos Zener">Comprar ahora</button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="contacto" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo" aria-label="ElectroParts - Inicio">
+          <span aria-hidden="true">⚡</span> ElectroParts
+        </a>
+        <p>Tu tienda de confianza para componentes electrónicos desde 2010.</p>
+        <address>
+          <p>Calle 45 #22-10, Bogotá, Colombia</p>
+          <p><a href="tel:+573001234567">+57 300 123 4567</a></p>
+          <p><a href="mailto:info@electroparts.com">info@electroparts.com</a></p>
+        </address>
+      </div>
+
+      <nav aria-label="Productos">
+        <h3 class="footer-heading">Productos</h3>
+        <ul role="list">
+          <li><a href="pages/productos.html?cat=resistencias">Resistencias</a></li>
+          <li><a href="pages/productos.html?cat=capacitores">Capacitores</a></li>
+          <li><a href="pages/productos.html?cat=transformadores">Transformadores</a></li>
+          <li><a href="pages/productos.html?cat=transistores">Transistores</a></li>
+          <li><a href="pages/productos.html?cat=diodos">Diodos</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Ayuda">
+        <h3 class="footer-heading">Ayuda</h3>
+        <ul role="list">
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Política de envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Soporte técnico</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-newsletter">
+        <h3 class="footer-heading">Newsletter</h3>
+        <p>Recibe ofertas exclusivas y novedades.</p>
+        <form action="#" method="post" aria-label="Suscripción al newsletter">
+          <div class="newsletter-form">
+            <label for="newsletter-email" class="visually-hidden">Tu correo electrónico</label>
+            <input id="newsletter-email" type="email" name="email"
+              placeholder="tu@correo.com" required autocomplete="email" aria-required="true" />
+            <button type="submit">Suscribir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p><small>© 2025 ElectroParts. Todos los derechos reservados.</small></p>
+        <nav aria-label="Políticas legales">
+          <ul role="list">
+            <li><a href="#">Términos y condiciones</a></li>
+            <li><a href="#">Política de privacidad</a></li>
+            <li><a href="#">Accesibilidad</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WCAG 1.3.1 Live regions para notificaciones -->
+  <div id="notification-area" role="status" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+  <div id="alert-area" role="alert" aria-live="assertive" aria-atomic="true" class="visually-hidden"></div>
+
+  <script src="js/accessibility.js"></script>
+</body>
+</html>

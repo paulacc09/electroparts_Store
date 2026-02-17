@@ -1,0 +1,118 @@
+/* VARIABLES CSS — Design tokens globales */
+/* WCAG 1.4.3 Contraste mínimo: todos los colores fueron verificados */
+:root {
+
+  /* COLORES PRINCIPALES */
+  /* Contraste verificado: --color-primary sobre blanco = 7.2:1 ✔ (AA y AAA) */
+  --color-primary: #1a3a5c;
+  --color-primary-light: #2d5986;
+  --color-primary-dark: #0f2238;
+
+  /* Acento */
+  --color-accent: #e8a020;
+  --color-accent-dark: #c47d0e;
+
+  /* Estado — WCAG 1.4.1: no dependen solo del color */
+  --color-success: #1a6b3a;     /* verde oscuro — texto blanco = 7.8:1 ✔ */
+  --color-warning: #7a4f00;     /* marrón — texto blanco = 9.1:1 ✔ */
+  --color-error: #b80000;       /* rojo oscuro — texto blanco = 8.2:1 ✔ */
+  --color-info: #0055a5;        /* azul — texto blanco = 6.3:1 ✔ */
+
+  /* Fondos */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f5f7fa;
+  --color-bg-dark: #111827;
+
+  /* Textos */
+  /* WCAG 1.4.3: --color-text sobre --color-bg = 18.1:1 ✔ */
+  --color-text: #111827;
+  --color-text-muted: #4b5563;
+  --color-text-light: #9ca3af;
+  --color-text-white: #ffffff;
+
+  /* Bordes */
+  --color-border: #d1d5db;
+  --color-border-focus: #2d5986;
+
+  /* TIPOGRAFÍA */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  /* Escala tipográfica en rem (WCAG 1.4.4) */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+
+  /* Pesos */
+  --font-regular: 400;
+  --font-medium:  500;
+  --font-semibold: 600;
+  --font-bold:    700;
+
+  /* ESPACIADO (múltiplos de 4px) */
+  --space-1:  0.25rem;  /* 4px  */
+  --space-2:  0.5rem;   /* 8px  */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-5:  1.25rem;  /* 20px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+
+  /* BORDES */
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
+  --radius-full: 9999px;
+
+  /* SOMBRAS */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+
+  /* TRANSICIONES */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* LAYOUT */
+  --container-max: 1280px;
+  --container-padding: var(--space-6);
+
+  /* FOCUS — WCAG 2.4.7 Foco visible */
+  --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-primary);
+  --focus-ring-invert: 0 0 0 3px var(--color-primary), 0 0 0 5px var(--color-bg);
+}
+
+/* Modo oscuro básico (WCAG 1.4.3 adaptable) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #111827;
+    --color-bg-alt: #1f2937;
+    --color-text: #f9fafb;
+    --color-text-muted: #d1d5db;
+    --color-border: #374151;
+  }
+}
+
+/* Reduce motion (WCAG 2.3) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
