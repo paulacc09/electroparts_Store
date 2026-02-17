@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Carrito de compras ElectroParts - Revisa tus productos seleccionados antes de finalizar tu pedido." />
+  <title>Carrito de Compras | ElectroParts</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/accessibility.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--space-8);
+      align-items: start;
+      padding: var(--space-8) 0 var(--space-16);
+    }
+
+    /* TABLA DEL CARRITO */
+    .cart-table { width: 100%; border-collapse: collapse; }
+
+    .cart-table thead th {
+      background: var(--color-primary);
+      color: white;
+      padding: var(--space-4) var(--space-5);
+      text-align: left;
+      font-weight: var(--font-semibold);
+      font-size: var(--text-sm);
+    }
+
+    .cart-table thead th:last-child { text-align: right; }
+
+    .cart-table tbody tr {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .cart-table tbody tr:hover { background: var(--color-bg-alt); }
+
+    .cart-table td {
+      padding: var(--space-4) var(--space-5);
+      vertical-align: middle;
+    }
+
+    .cart-table td:last-child { text-align: right; }
+
+    /* Producto en carrito */
+    .cart-product {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .cart-product-img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-alt);
+      padding: var(--space-1);
+      flex-shrink: 0;
+    }
+
+    .cart-product-info { min-width: 0; }
+
+    .cart-product-name {
+      font-weight: var(--font-semibold);
+      font-size: var(--text-base);
+      margin: 0 0 var(--space-1);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-product-name a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+    .cart-product-name a:hover { color: var(--color-primary); text-decoration: underline; }
+
+    .cart-product-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Control cantidad en carrito */
+    .cart-qty-control {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .cart-qty-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg-alt);
+      font-size: var(--text-base);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+      border: none;
+      transition: background var(--transition-fast);
+    }
+
+    .cart-qty-btn:hover { background: var(--color-border); }
+
+    .cart-qty-input {
+      width: 48px;
+      height: 36px;
+      text-align: center;
+      border: none;
+      border-left: 1.5px solid var(--color-border);
+      border-right: 1.5px solid var(--color-border);
+      border-radius: 0;
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+    }
+
+    /* Precio en carrito */
+    .cart-price {
+      font-weight: var(--font-bold);
+      font-size: var(--text-base);
+      color: var(--color-primary);
+      white-space: nowrap;
+    }
+
+    /* Botón eliminar */
+    .btn-remove {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-error);
+      font-size: var(--text-sm);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+    }
+    .btn-remove:hover { background: #fee2e2; }
+
+    /* RESUMEN DEL PEDIDO */
+    .order-summary {
+      position: sticky;
+      top: 80px;
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .summary-header {
+      background: var(--color-primary);
+      color: white;
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .summary-header h2 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      margin: 0;
+      color: white;
+    }
+
+    .summary-body {
+      padding: var(--space-5) var(--space-6);
+    }
+
+    /* WCAG 1.3.1 - dl para totales */
+    .summary-totals {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .summary-term {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .summary-value {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      font-weight: var(--font-medium);
+      text-align: right;
+    }
+
+    .summary-total-row {
+      grid-column: 1 / -1;
+      border-top: 2px solid var(--color-primary);
+      padding-top: var(--space-3);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2);
+    }
+
+    .summary-total-label {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-text);
+    }
+
+    .summary-total-value {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+    }
+
+    /* Cupón */
+    .coupon-section {
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .coupon-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+
+    .coupon-form {
+      display: flex;
+      gap: 0;
+    }
+
+    .coupon-form input {
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-size: var(--text-sm);
+    }
+
+    .coupon-form button {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-primary);
+      color: white;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      min-height: 44px;
+      white-space: nowrap;
+    }
+    .coupon-form button:hover { background: var(--color-primary-light); }
+
+    /* Garantías */
+    .checkout-guarantees {
+      margin-top: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .guarantee-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Carrito vacío */
+    .cart-empty {
+      text-align: center;
+      padding: var(--space-20) var(--space-8);
+    }
+
+    .cart-empty-icon {
+      font-size: 4rem;
+      margin-bottom: var(--space-4);
+      display: block;
+      aria-hidden: true;
+    }
+
+    .cart-empty h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .cart-empty p {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+    }
+
+    /* CHECKOUT STEPS (WCAG 1.3.1 progreso) */
+    .checkout-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: var(--space-8);
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-muted);
+      padding: var(--space-3) var(--space-5);
+    }
+
+    .step[aria-current="step"] {
+      color: var(--color-primary);
+      font-weight: var(--font-bold);
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-bold);
+      font-size: var(--text-sm);
+      background: var(--color-bg-alt);
+      border: 2px solid var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .step[aria-current="step"] .step-number {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .step-completed .step-number {
+      background: var(--color-success);
+      color: white;
+      border-color: var(--color-success);
+    }
+
+    .step-divider {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      max-width: 60px;
+    }
+
+    @media (max-width: 900px) {
+      .cart-layout { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      .checkout-steps .step span:last-child { display: none; }
+      .cart-table thead th:nth-child(3) { display: none; }
+      .cart-table tbody td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main-nav" class="skip-link">Saltar a la navegación</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo" aria-label="ElectroParts - Inicio">
+        <span class="logo-text" aria-hidden="true">⚡</span><span>ElectroParts</span>
+      </a>
+      <div class="header-search" role="search">
+        <form action="productos.html" method="get" aria-label="Buscar productos">
+          <label for="search-input" class="visually-hidden">Buscar componentes</label>
+          <input id="search-input" type="search" name="q" placeholder="Buscar componentes..." autocomplete="off" />
+          <button type="submit" aria-label="Buscar">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div class="header-actions">
+        <a href="carrito.html" class="btn-cart" aria-label="Carrito, 3 artículos" aria-current="page">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" aria-live="polite" aria-atomic="true">3</span>
+        </a>
+        <button class="btn-menu" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav id="main-nav" class="main-nav" role="navigation" aria-label="Navegación principal">
+      <div class="container">
+        <ul class="nav-list" role="list">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="productos.html">Categorías</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="../index.html#ofertas">Ofertas</a></li>
+          <li><a href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <div class="container">
+
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><span aria-current="page">Carrito de compras</span></li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title" style="margin-bottom: var(--space-6);">
+        Carrito de Compras
+        <span style="font-size:var(--text-lg); color:var(--color-text-muted); font-weight:var(--font-regular);">
+          (3 artículos)
+        </span>
+      </h1>
+
+      <!-- PASOS DEL PROCESO (WCAG 1.3.1 progreso accesible) -->
+      <nav aria-label="Pasos del proceso de compra">
+        <ol class="checkout-steps" role="list">
+          <li class="step" aria-current="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <span>Carrito</span>
+          </li>
+          <div class="step-divider" aria-hidden="true"></div>
+          <li class="step" aria-label="Paso 2: Datos de envío, pendiente">
+            <span class="step-number" aria-hidden="true">2</span>
+            <span>Envío</span>
+          </li>
+          <div class="step-divider" aria-hidden="true"></div>
+          <li class="step" aria-label="Paso 3: Pago, pendiente">
+            <span class="step-number" aria-hidden="true">3</span>
+            <span>Pago</span>
+          </li>
+          <div class="step-divider" aria-hidden="true"></div>
+          <li class="step" aria-label="Paso 4: Confirmación, pendiente">
+            <span class="step-number" aria-hidden="true">4</span>
+            <span>Confirmación</span>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="cart-layout">
+
+        <!-- TABLA DEL CARRITO -->
+        <div>
+
+          <!-- WCAG 1.3.1 - Tabla con caption y scope -->
+          <div class="table-wrapper" role="region" aria-label="Productos en tu carrito" tabindex="0">
+            <table class="cart-table" id="cart-table"
+              aria-describedby="cart-table-desc" aria-live="polite">
+              <caption>
+                <span id="cart-table-desc" class="visually-hidden">
+                  Lista de productos en tu carrito con cantidades y precios.
+                  Puedes modificar cantidades o eliminar productos.
+                </span>
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio unitario</th>
+                  <th scope="col">Subtotal</th>
+                  <th scope="col"><span class="visually-hidden">Acciones</span></th>
+                </tr>
+              </thead>
+              <tbody id="cart-items">
+
+                <!-- Producto 1 -->
+                <tr id="cart-item-1">
+                  <td>
+                    <div class="cart-product">
+                      <!-- WCAG 1.1.1 -->
+                      <img
+                        src="../assets/images/resistencia-carbon.jpg"
+                        alt="Resistencias Carbón 1/4W Kit 100 piezas"
+                        width="72" height="72"
+                        class="cart-product-img"
+                        loading="lazy"
+                      />
+                      <div class="cart-product-info">
+                        <h2 class="cart-product-name">
+                          <a href="detalle-producto.html?id=1">
+                            Resistencias Carbón 1/4W Kit 100 piezas
+                          </a>
+                        </h2>
+                        <p class="cart-product-meta">SKU: RES-C14W-100 · Categoría: Resistencias</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cart-qty-control"
+                      role="group" aria-label="Cantidad para Resistencias Carbón 1/4W Kit">
+                      <button class="cart-qty-btn" data-action="minus" data-item="1"
+                        aria-label="Reducir cantidad de Resistencias Carbón 1/4W">−</button>
+                      <input
+                        class="cart-qty-input"
+                        type="number"
+                        value="2"
+                        min="1"
+                        max="100"
+                        aria-label="Cantidad de Resistencias Carbón 1/4W, actualmente 2"
+                        data-item="1"
+                        data-price="12500"
+                      />
+                      <button class="cart-qty-btn" data-action="plus" data-item="1"
+                        aria-label="Aumentar cantidad de Resistencias Carbón 1/4W">+</button>
+                    </div>
+                  </td>
+                  <td>
+                    <span aria-label="Precio unitario: $12.500">$12.500</span>
+                  </td>
+                  <td>
+                    <span class="cart-price" id="subtotal-1" aria-label="Subtotal: $25.000">$25.000</span>
+                  </td>
+                  <td>
+                    <button class="btn-remove" data-item="1"
+                      aria-label="Eliminar Resistencias Carbón 1/4W Kit del carrito">
+                      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6"/><path d="M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Producto 2 -->
+                <tr id="cart-item-2">
+                  <td>
+                    <div class="cart-product">
+                      <img
+                        src="../assets/images/transformador-220.jpg"
+                        alt="Transformador 220V a 12V 1 Amperio"
+                        width="72" height="72"
+                        class="cart-product-img"
+                        loading="lazy"
+                      />
+                      <div class="cart-product-info">
+                        <h2 class="cart-product-name">
+                          <a href="detalle-producto.html?id=2">Transformador 220V / 12V 1A</a>
+                        </h2>
+                        <p class="cart-product-meta">SKU: TR-220-12-1A · Categoría: Transformadores</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cart-qty-control"
+                      role="group" aria-label="Cantidad para Transformador 220V 12V 1A">
+                      <button class="cart-qty-btn" data-action="minus" data-item="2"
+                        aria-label="Reducir cantidad de Transformador">−</button>
+                      <input class="cart-qty-input" type="number"
+                        value="1" min="1" max="50"
+                        aria-label="Cantidad de Transformador 220V, actualmente 1"
+                        data-item="2" data-price="28000" />
+                      <button class="cart-qty-btn" data-action="plus" data-item="2"
+                        aria-label="Aumentar cantidad de Transformador">+</button>
+                    </div>
+                  </td>
+                  <td><span aria-label="Precio unitario: $28.000">$28.000</span></td>
+                  <td>
+                    <span class="cart-price" id="subtotal-2" aria-label="Subtotal: $28.000">$28.000</span>
+                  </td>
+                  <td>
+                    <button class="btn-remove" data-item="2"
+                      aria-label="Eliminar Transformador 220V 12V 1A del carrito">
+                      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6"/><path d="M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Producto 3 -->
+                <tr id="cart-item-3">
+                  <td>
+                    <div class="cart-product">
+                      <img
+                        src="../assets/images/arduino-uno.jpg"
+                        alt="Arduino UNO R3 con microcontrolador ATmega328"
+                        width="72" height="72"
+                        class="cart-product-img"
+                        loading="lazy"
+                      />
+                      <div class="cart-product-info">
+                        <h2 class="cart-product-name">
+                          <a href="detalle-producto.html?id=4">Arduino UNO R3 ATmega328</a>
+                        </h2>
+                        <p class="cart-product-meta">SKU: ARD-UNO-R3 · Categoría: Microcontroladores</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cart-qty-control"
+                      role="group" aria-label="Cantidad para Arduino UNO R3">
+                      <button class="cart-qty-btn" data-action="minus" data-item="3"
+                        aria-label="Reducir cantidad de Arduino UNO">−</button>
+                      <input class="cart-qty-input" type="number"
+                        value="1" min="1" max="20"
+                        aria-label="Cantidad de Arduino UNO, actualmente 1"
+                        data-item="3" data-price="45000" />
+                      <button class="cart-qty-btn" data-action="plus" data-item="3"
+                        aria-label="Aumentar cantidad de Arduino UNO">+</button>
+                    </div>
+                  </td>
+                  <td><span aria-label="Precio unitario: $45.000">$45.000</span></td>
+                  <td>
+                    <span class="cart-price" id="subtotal-3" aria-label="Subtotal: $45.000">$45.000</span>
+                  </td>
+                  <td>
+                    <button class="btn-remove" data-item="3"
+                      aria-label="Eliminar Arduino UNO R3 del carrito">
+                      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6"/><path d="M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ACCIONES CARRITO -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--space-5); flex-wrap:wrap; gap:var(--space-3);">
+            <a href="productos.html" class="btn btn-outline">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+              Seguir comprando
+            </a>
+            <button class="btn" style="color:var(--color-error); border-color:var(--color-error);"
+              id="clear-cart-btn"
+              aria-label="Vaciar todo el carrito de compras">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              </svg>
+              Vaciar carrito
+            </button>
+          </div>
+        </div>
+
+        <!-- RESUMEN DEL PEDIDO -->
+        <aside aria-label="Resumen del pedido">
+          <div class="order-summary">
+            <div class="summary-header">
+              <h2>Resumen del pedido</h2>
+            </div>
+            <div class="summary-body">
+
+              <!-- CUPÓN -->
+              <div class="coupon-section">
+                <h3 class="coupon-title">¿Tienes un cupón de descuento?</h3>
+                <form class="coupon-form" aria-label="Aplicar cupón de descuento">
+                  <label for="coupon-input" class="visually-hidden">Código de cupón</label>
+                  <input
+                    id="coupon-input"
+                    type="text"
+                    name="coupon"
+                    placeholder="Ingresa tu código"
+                    autocomplete="off"
+                    aria-describedby="coupon-hint"
+                  />
+                  <span id="coupon-hint" class="visually-hidden">
+                    Ingresa tu código de descuento y presiona Aplicar
+                  </span>
+                  <button type="submit" aria-label="Aplicar código de cupón">Aplicar</button>
+                </form>
+              </div>
+
+              <!-- WCAG 1.3.1 - Totales con dl semántico -->
+              <dl class="summary-totals" aria-label="Desglose de precios">
+                <dt class="summary-term">Subtotal productos</dt>
+                <dd class="summary-value" id="summary-subtotal" aria-live="polite">$98.000</dd>
+
+                <dt class="summary-term">Descuento</dt>
+                <dd class="summary-value" style="color: var(--color-success);" id="summary-discount">−$17.000</dd>
+
+                <dt class="summary-term">Envío</dt>
+                <dd class="summary-value" id="summary-shipping">
+                  <!-- WCAG 1.4.1: no solo color para indicar envío gratis -->
+                  <span style="color:var(--color-success); font-weight:var(--font-bold);">
+                    ✔ Gratis
+                  </span>
+                </dd>
+
+                <dt class="summary-term">IVA (19%)</dt>
+                <dd class="summary-value" id="summary-tax">$15.390</dd>
+
+                <div class="summary-total-row">
+                  <dt class="summary-total-label">Total a pagar</dt>
+                  <dd class="summary-total-value" id="summary-total"
+                    aria-live="polite" aria-atomic="true"
+                    aria-label="Total a pagar: $96.390">
+                    $96.390
+                  </dd>
+                </div>
+              </dl>
+
+              <!-- BOTÓN CHECKOUT -->
+              <button class="btn btn-primary" style="width:100%; font-size:var(--text-lg); margin-bottom:var(--space-3);"
+                aria-label="Proceder al pago por un total de $96.390">
+                Proceder al pago
+                <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+
+              <!-- MÉTODOS DE PAGO (WCAG 1.1.1) -->
+              <p style="font-size:var(--text-xs); text-align:center; color:var(--color-text-muted); margin-bottom:var(--space-3);">
+                Métodos de pago aceptados:
+              </p>
+              <ul style="display:flex; gap:var(--space-2); justify-content:center; list-style:none; margin-bottom:var(--space-4);"
+                role="list" aria-label="Métodos de pago disponibles">
+                <li>
+                  <span class="visually-hidden">Visa</span>
+                  <div style="background:var(--color-bg-alt); border:1px solid var(--color-border); border-radius:var(--radius-md); padding: var(--space-1) var(--space-3); font-size:var(--text-sm); font-weight:bold; color:#1a1f71;" aria-hidden="true">VISA</div>
+                </li>
+                <li>
+                  <span class="visually-hidden">Mastercard</span>
+                  <div style="background:var(--color-bg-alt); border:1px solid var(--color-border); border-radius:var(--radius-md); padding: var(--space-1) var(--space-3); font-size:var(--text-sm); font-weight:bold; color:#eb001b;" aria-hidden="true">MC</div>
+                </li>
+                <li>
+                  <span class="visually-hidden">PSE - Pago por banco</span>
+                  <div style="background:var(--color-bg-alt); border:1px solid var(--color-border); border-radius:var(--radius-md); padding: var(--space-1) var(--space-3); font-size:var(--text-sm); font-weight:bold; color:#00529b;" aria-hidden="true">PSE</div>
+                </li>
+                <li>
+                  <span class="visually-hidden">Efecty</span>
+                  <div style="background:var(--color-bg-alt); border:1px solid var(--color-border); border-radius:var(--radius-md); padding: var(--space-1) var(--space-3); font-size:var(--text-sm); font-weight:bold; color:#f5a623;" aria-hidden="true">Efecty</div>
+                </li>
+              </ul>
+
+              <!-- GARANTÍAS -->
+              <ul class="checkout-guarantees" role="list" aria-label="Garantías de la compra">
+                <li class="guarantee-item">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  Pago 100% seguro con cifrado SSL
+                </li>
+                <li class="guarantee-item">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  Garantía de devolución 30 días
+                </li>
+                <li class="guarantee-item">
+                  <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
+                  Envío gratis en compras mayores a $50.000
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="footer-logo" aria-label="ElectroParts - Inicio">
+          <span aria-hidden="true">⚡</span> ElectroParts
+        </a>
+        <p>Tu tienda de confianza para componentes electrónicos desde 2010.</p>
+        <address>
+          <p>Calle 45 #22-10, Bogotá, Colombia</p>
+          <p><a href="tel:+573001234567">+57 300 123 4567</a></p>
+          <p><a href="mailto:info@electroparts.com">info@electroparts.com</a></p>
+        </address>
+      </div>
+      <nav aria-label="Productos"><h3 class="footer-heading">Productos</h3>
+        <ul role="list">
+          <li><a href="productos.html?cat=resistencias">Resistencias</a></li>
+          <li><a href="productos.html?cat=capacitores">Capacitores</a></li>
+          <li><a href="productos.html?cat=transformadores">Transformadores</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda"><h3 class="footer-heading">Ayuda</h3>
+        <ul role="list">
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Política de envíos</a></li>
+          <li><a href="#">Soporte técnico</a></li>
+        </ul>
+      </nav>
+      <div class="footer-newsletter">
+        <h3 class="footer-heading">Newsletter</h3>
+        <form action="#" method="post" aria-label="Suscripción al newsletter">
+          <div class="newsletter-form">
+            <label for="nl-email-cart" class="visually-hidden">Tu correo</label>
+            <input id="nl-email-cart" type="email" name="email"
+              placeholder="tu@correo.com" required autocomplete="email" />
+            <button type="submit">Suscribir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container footer-bottom-inner">
+      <p><small>© 2025 ElectroParts. Todos los derechos reservados.</small></p>
+      <nav aria-label="Políticas legales"><ul role="list">
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Accesibilidad</a></li>
+      </ul></nav>
+    </div></div>
+  </footer>
+
+  <!-- WCAG 4.1.3 Live regions -->
+  <div id="notification-area" role="status" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+  <div id="alert-area" role="alert" aria-live="assertive" aria-atomic="true" class="visually-hidden"></div>
+
+  <script src="../js/accessibility.js"></script>
+  <script>
+    // ============================================================
+    // Lógica del carrito
+    // ============================================================
+    const notif = document.getElementById('notification-area');
+
+    function notify(msg) {
+      notif.textContent = '';
+      requestAnimationFrame(function() { notif.textContent = msg; });
+    }
+
+    function formatPrice(n) {
+      return '$' + n.toLocaleString('es-CO');
+    }
+
+    // Actualizar subtotal de un ítem
+    function updateSubtotal(itemId) {
+      const input    = document.querySelector('.cart-qty-input[data-item="'+itemId+'"]');
+      const price    = parseInt(input.dataset.price);
+      const qty      = parseInt(input.value) || 1;
+      const subtotal = price * qty;
+      const el       = document.getElementById('subtotal-' + itemId);
+      el.textContent = formatPrice(subtotal);
+      el.setAttribute('aria-label', 'Subtotal: ' + formatPrice(subtotal));
+      updateTotals();
+    }
+
+    // Recalcular totales globales
+    function updateTotals() {
+      let total = 0;
+      document.querySelectorAll('.cart-qty-input').forEach(function(inp) {
+        const qty   = parseInt(inp.value) || 1;
+        const price = parseInt(inp.dataset.price);
+        total += qty * price;
+      });
+
+      const discount = Math.round(total * 0.15);
+      const shipping = total >= 50000 ? 0 : 8000;
+      const tax      = Math.round((total - discount + shipping) * 0.19);
+      const grand    = total - discount + shipping + tax;
+
+      const subtotalEl  = document.getElementById('summary-subtotal');
+      const discountEl  = document.getElementById('summary-discount');
+      const shippingEl  = document.getElementById('summary-shipping');
+      const taxEl       = document.getElementById('summary-tax');
+      const totalEl     = document.getElementById('summary-total');
+
+      if (subtotalEl)  subtotalEl.textContent  = formatPrice(total);
+      if (discountEl)  discountEl.textContent  = '−' + formatPrice(discount);
+      if (shippingEl)  shippingEl.innerHTML    = shipping === 0
+        ? '<span style="color:var(--color-success);font-weight:bold;">✔ Gratis</span>'
+        : formatPrice(shipping);
+      if (taxEl)       taxEl.textContent       = formatPrice(tax);
+      if (totalEl) {
+        totalEl.textContent = formatPrice(grand);
+        totalEl.setAttribute('aria-label', 'Total a pagar: ' + formatPrice(grand));
+      }
+
+      // Actualizar contador carrito
+      let itemCount = 0;
+      document.querySelectorAll('.cart-qty-input').forEach(function(i) {
+        itemCount += parseInt(i.value) || 1;
+      });
+      document.querySelectorAll('.cart-count').forEach(function(el) {
+        el.textContent = itemCount;
+      });
+    }
+
+    // Botones + y −
+    document.querySelectorAll('.cart-qty-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const itemId = btn.dataset.item;
+        const input  = document.querySelector('.cart-qty-input[data-item="'+itemId+'"]');
+        const max    = parseInt(input.max) || 100;
+        let val      = parseInt(input.value) || 1;
+
+        if (btn.dataset.action === 'plus'  && val < max) val++;
+        if (btn.dataset.action === 'minus' && val > 1)   val--;
+
+        input.value = val;
+        input.setAttribute('aria-label',
+          input.getAttribute('aria-label').replace(/\d+$/, val));
+        updateSubtotal(itemId);
+        notify('Cantidad actualizada: ' + val + ' unidad' + (val !== 1 ? 'es' : ''));
+      });
+    });
+
+    // Cambio manual en input
+    document.querySelectorAll('.cart-qty-input').forEach(function(inp) {
+      inp.addEventListener('change', function() {
+        const min = parseInt(inp.min) || 1;
+        const max = parseInt(inp.max) || 100;
+        inp.value = Math.max(min, Math.min(max, parseInt(inp.value) || 1));
+        updateSubtotal(inp.dataset.item);
+      });
+    });
+
+    // Eliminar ítem
+    document.querySelectorAll('.btn-remove').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const row  = document.getElementById('cart-item-' + btn.dataset.item);
+        const name = row.querySelector('.cart-product-name a').textContent.trim();
+        if (confirm('¿Deseas eliminar "' + name + '" del carrito?')) {
+          row.remove();
+          updateTotals();
+          notify(name + ' eliminado del carrito.');
+        }
+      });
+    });
+
+    // Vaciar carrito
+    document.getElementById('clear-cart-btn').addEventListener('click', function() {
+      if (confirm('¿Deseas vaciar todo el carrito?')) {
+        document.getElementById('cart-items').innerHTML =
+          '<tr><td colspan="5" style="text-align:center; padding: 3rem; color: var(--color-text-muted);">' +
+          'Tu carrito está vacío. <a href="productos.html">Ver productos</a></td></tr>';
+        updateTotals();
+        notify('El carrito ha sido vaciado.');
+      }
+    });
+  </script>
+</body>
+</html>

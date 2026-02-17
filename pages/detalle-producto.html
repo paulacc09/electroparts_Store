@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Resistencias Carbón 1/4W Kit 100 piezas - Valores desde 10Ω hasta 1MΩ. Tolerancia 5%. Ideal para prototipos y circuitos educativos." />
+  <title>Resistencias Carbón 1/4W Kit 100 piezas | ElectroParts</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/accessibility.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* Estilos específicos de detalle */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: start;
+      margin-bottom: var(--space-16);
+    }
+
+    /* GALERÍA */
+    .product-gallery { position: sticky; top: 80px; }
+
+    .gallery-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1.5px solid var(--color-border);
+      margin-bottom: var(--space-4);
+      aspect-ratio: 1;
+      background: var(--color-bg-alt);
+      position: relative;
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: var(--space-6);
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: var(--space-3);
+      overflow-x: auto;
+      padding-bottom: var(--space-2);
+    }
+
+    /* WCAG 2.5.5 mínimo 44x44 en botones */
+    .thumb-btn {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      padding: var(--space-1);
+      cursor: pointer;
+      background: var(--color-bg-alt);
+      transition: border-color var(--transition-fast);
+    }
+
+    .thumb-btn:hover,
+    .thumb-btn[aria-pressed="true"] {
+      border-color: var(--color-primary);
+    }
+
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* PANEL DERECHO */
+    .product-detail-info {}
+
+    .detail-category {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-2);
+    }
+
+    .detail-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      line-height: 1.2;
+      margin-bottom: var(--space-3);
+    }
+
+    .detail-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .detail-rating .stars { font-size: var(--text-lg); color: var(--color-accent-dark); }
+
+    .rating-link {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+    }
+
+    .detail-price-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      flex-wrap: wrap;
+    }
+
+    .detail-price-current {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      color: var(--color-primary);
+    }
+
+    .detail-price-old {
+      font-size: var(--text-xl);
+      color: var(--color-text-muted);
+    }
+
+    .detail-discount {
+      background: var(--color-error);
+      color: white;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+    }
+
+    /* Stock */
+    .stock-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      margin-bottom: var(--space-5);
+    }
+
+    .stock-in     { color: var(--color-success); }
+    .stock-low    { color: var(--color-warning); }
+    .stock-out    { color: var(--color-error); }
+
+    /* CANTIDAD */
+    .quantity-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .quantity-label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: fit-content;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      border: none;
+      transition: background var(--transition-fast);
+    }
+
+    .qty-btn:hover { background: var(--color-border); }
+
+    .qty-input {
+      width: 60px;
+      height: 44px;
+      text-align: center;
+      border: none;
+      border-left: 1.5px solid var(--color-border);
+      border-right: 1.5px solid var(--color-border);
+      border-radius: 0;
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+    }
+
+    /* BOTONES ACCIÓN */
+    .detail-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .detail-actions .btn {
+      width: 100%;
+      font-size: var(--text-lg);
+      padding: var(--space-4);
+    }
+
+    /* SPECS */
+    .specs-block {
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .specs-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-4);
+      color: var(--color-text);
+    }
+
+    /* WCAG 1.3.1 - dl con dt/dd para especificaciones */
+    .specs-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2) var(--space-4);
+    }
+
+    .spec-item {
+      display: contents;
+    }
+
+    .spec-term {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      font-weight: var(--font-medium);
+    }
+
+    .spec-value {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      font-weight: var(--font-semibold);
+    }
+
+    /* TABS */
+    .product-tabs { margin-top: var(--space-10); }
+
+    .tab-list {
+      display: flex;
+      border-bottom: 2px solid var(--color-border);
+      gap: 0;
+      list-style: none;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: var(--space-3) var(--space-6);
+      font-size: var(--text-base);
+      font-weight: var(--font-medium);
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+      font-weight: var(--font-semibold);
+    }
+
+    .tab-btn:hover { color: var(--color-primary); }
+
+    .tab-panel {
+      padding: var(--space-8) 0;
+      display: none;
+    }
+
+    .tab-panel.is-active { display: block; }
+
+    /* RESEÑAS */
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .review-item {
+      padding: var(--space-5);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+    }
+
+    .review-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .reviewer-name {
+      font-weight: var(--font-semibold);
+      font-size: var(--text-base);
+      margin: 0;
+    }
+
+    .review-date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .review-text { font-size: var(--text-sm); color: var(--color-text); }
+
+    /* RELACIONADOS */
+    .related-section { padding: var(--space-16) 0; background: var(--color-bg-alt); }
+
+    @media (max-width: 768px) {
+      .detail-layout { grid-template-columns: 1fr; gap: var(--space-6); }
+      .product-gallery { position: static; }
+      .detail-title { font-size: var(--text-2xl); }
+      .detail-price-current { font-size: var(--text-3xl); }
+      .specs-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main-nav" class="skip-link">Saltar a la navegación</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo" aria-label="ElectroParts - Inicio">
+        <span class="logo-text" aria-hidden="true">⚡</span><span>ElectroParts</span>
+      </a>
+      <div class="header-search" role="search">
+        <form action="productos.html" method="get" aria-label="Buscar productos">
+          <label for="search-input" class="visually-hidden">Buscar componentes</label>
+          <input id="search-input" type="search" name="q" placeholder="Buscar componentes..." autocomplete="off" />
+          <button type="submit" aria-label="Buscar">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div class="header-actions">
+        <a href="carrito.html" class="btn-cart" aria-label="Carrito, 3 artículos">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" aria-live="polite" aria-atomic="true">3</span>
+        </a>
+        <button class="btn-menu" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav id="main-nav" class="main-nav" role="navigation" aria-label="Navegación principal">
+      <div class="container">
+        <ul class="nav-list" role="list">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="productos.html">Categorías</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="../index.html#ofertas">Ofertas</a></li>
+          <li><a href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <div class="container" style="padding-top: var(--space-6);">
+
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="productos.html?cat=resistencias">Resistencias</a></li>
+          <li><span aria-current="page">Resistencias Carbón 1/4W Kit 100 piezas</span></li>
+        </ol>
+      </nav>
+
+      <!-- DETALLE PRINCIPAL -->
+      <div class="detail-layout">
+
+        <!-- GALERÍA -->
+        <section aria-label="Galería de imágenes del producto">
+          <div class="gallery-main" id="gallery-main">
+            <!-- WCAG 1.1.1 alt descriptivo y detallado -->
+            <img
+              id="main-img"
+              src="../assets/images/resistencia-carbon-detalle.jpg"
+              alt="Kit de resistencias de carbón 1/4W, 100 piezas en bolsa transparente con etiqueta de valores"
+              width="500" height="500"
+            />
+          </div>
+
+          <!-- WCAG 1.1.1: cada thumb con alt descriptivo -->
+          <div class="gallery-thumbs" role="list" aria-label="Imágenes adicionales del producto">
+            <button class="thumb-btn" aria-label="Ver imagen 1: kit completo en bolsa"
+              aria-pressed="true" data-img="../assets/images/resistencia-carbon-detalle.jpg"
+              data-alt="Kit de resistencias de carbón 1/4W, 100 piezas en bolsa transparente">
+              <img src="../assets/images/resistencia-carbon-detalle.jpg"
+                alt="" aria-hidden="true" />
+            </button>
+            <button class="thumb-btn" aria-label="Ver imagen 2: resistencias dispersas"
+              aria-pressed="false" data-img="../assets/images/resistencia-carbon-2.jpg"
+              data-alt="Resistencias de carbón dispersas mostrando las bandas de colores de los valores">
+              <img src="../assets/images/resistencia-carbon-2.jpg"
+                alt="" aria-hidden="true" />
+            </button>
+            <button class="thumb-btn" aria-label="Ver imagen 3: detalle de bandas de color"
+              aria-pressed="false" data-img="../assets/images/resistencia-carbon-3.jpg"
+              data-alt="Primer plano de una resistencia de carbón mostrando sus 4 bandas de color">
+              <img src="../assets/images/resistencia-carbon-3.jpg"
+                alt="" aria-hidden="true" />
+            </button>
+          </div>
+        </section>
+
+        <!-- INFO DEL PRODUCTO -->
+        <div class="product-detail-info">
+
+          <p class="detail-category">Resistencias</p>
+
+          <h1 class="detail-title">Resistencias Carbón 1/4W Kit 100 piezas</h1>
+
+          <div class="detail-rating">
+            <div role="img" aria-label="Calificación: 4.5 de 5 estrellas">
+              <span class="stars" aria-hidden="true">★★★★½</span>
+            </div>
+            <a href="#tab-reviews" class="rating-link" id="reviews-link">
+              128 opiniones
+            </a>
+            <span class="status status-available" aria-label="En stock: 486 unidades disponibles">
+              ● En stock
+            </span>
+          </div>
+
+          <!-- PRECIO (WCAG 1.3.1 estructura semántica) -->
+          <div class="detail-price-block">
+            <span class="detail-price-current" aria-label="Precio actual: $12.500">$12.500</span>
+            <del class="detail-price-old" aria-label="Precio anterior: $15.000">$15.000</del>
+            <span class="detail-discount" aria-label="Descuento del 17 por ciento">−17%</span>
+          </div>
+
+          <!-- STOCK -->
+          <p class="stock-indicator stock-in">
+            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <strong>486 unidades disponibles</strong> — Listo para envío inmediato
+          </p>
+
+          <!-- ESPECIFICACIONES RÁPIDAS (WCAG 1.3.1 dl semántico) -->
+          <div class="specs-block">
+            <h2 class="specs-title">Especificaciones principales</h2>
+            <dl class="specs-list">
+              <div class="spec-item">
+                <dt class="spec-term">Potencia</dt>
+                <dd class="spec-value">1/4W (0.25W)</dd>
+              </div>
+              <div class="spec-item">
+                <dt class="spec-term">Tolerancia</dt>
+                <dd class="spec-value">±5%</dd>
+              </div>
+              <div class="spec-item">
+                <dt class="spec-term">Rango de valores</dt>
+                <dd class="spec-value">10Ω — 1MΩ</dd>
+              </div>
+              <div class="spec-item">
+                <dt class="spec-term">Cantidad</dt>
+                <dd class="spec-value">100 piezas</dd>
+              </div>
+              <div class="spec-item">
+                <dt class="spec-term">Material</dt>
+                <dd class="spec-value">Carbón</dd>
+              </div>
+              <div class="spec-item">
+                <dt class="spec-term">Temperatura</dt>
+                <dd class="spec-value">−55°C a +155°C</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- CANTIDAD -->
+          <div class="quantity-group">
+            <label class="quantity-label" for="qty-input">Cantidad:</label>
+            <div class="quantity-control">
+              <button class="qty-btn" id="qty-minus"
+                aria-label="Reducir cantidad" aria-controls="qty-input">−</button>
+              <input
+                id="qty-input"
+                class="qty-input"
+                type="number"
+                value="1"
+                min="1"
+                max="100"
+                aria-label="Cantidad de unidades a comprar"
+                aria-describedby="qty-hint"
+              />
+              <button class="qty-btn" id="qty-plus"
+                aria-label="Aumentar cantidad" aria-controls="qty-input">+</button>
+            </div>
+            <span id="qty-hint" class="visually-hidden">
+              Mínimo 1 unidad, máximo 100 unidades por pedido
+            </span>
+          </div>
+
+          <!-- ACCIONES -->
+          <div class="detail-actions">
+            <button class="btn btn-primary btn-add-cart" data-product-id="1"
+              aria-label="Agregar Resistencias Carbón 1/4W Kit 100 piezas al carrito">
+              <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              Agregar al carrito
+            </button>
+            <a href="carrito.html" class="btn btn-secondary"
+              style="background: var(--color-primary-dark); color:white; border-color: var(--color-primary-dark);">
+              Comprar ahora
+            </a>
+          </div>
+
+          <!-- INFO ADICIONAL -->
+          <ul class="features-list" role="list" style="margin-top: 0;">
+            <li><span aria-hidden="true">✔</span> Envío a todo el país en 24–48h</li>
+            <li><span aria-hidden="true">✔</span> Datasheet descargable incluido</li>
+            <li><span aria-hidden="true">✔</span> Garantía de calidad 30 días</li>
+            <li><span aria-hidden="true">✔</span> Factura electrónica</li>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- TABS: DESCRIPCIÓN / ESPECIFICACIONES / RESEÑAS -->
+      <!-- WCAG 1.3.1 + 4.1.2 Tabs con roles ARIA correctos -->
+      <div class="product-tabs" id="tab-reviews">
+        <ul class="tab-list" role="tablist" aria-label="Información del producto">
+          <li role="presentation">
+            <button class="tab-btn" role="tab"
+              id="tab-desc-btn" aria-controls="tab-desc"
+              aria-selected="true">
+              Descripción
+            </button>
+          </li>
+          <li role="presentation">
+            <button class="tab-btn" role="tab"
+              id="tab-specs-btn" aria-controls="tab-specs"
+              aria-selected="false">
+              Especificaciones
+            </button>
+          </li>
+          <li role="presentation">
+            <button class="tab-btn" role="tab"
+              id="tab-reviews-btn" aria-controls="tab-reviews-panel"
+              aria-selected="false">
+              Reseñas (128)
+            </button>
+          </li>
+          <li role="presentation">
+            <button class="tab-btn" role="tab"
+              id="tab-datasheet-btn" aria-controls="tab-datasheet"
+              aria-selected="false">
+              Datasheet
+            </button>
+          </li>
+        </ul>
+
+        <!-- Panel Descripción -->
+        <div id="tab-desc" class="tab-panel is-active"
+          role="tabpanel" aria-labelledby="tab-desc-btn" tabindex="0">
+          <h2 class="visually-hidden">Descripción del producto</h2>
+          <p>
+            El <strong>Kit de Resistencias de Carbón 1/4W</strong> es ideal para estudiantes,
+            hobbistas e ingenieros que necesitan una variedad completa de valores para sus proyectos
+            de electrónica. Cada kit incluye 100 resistencias surtidas con los valores más utilizados.
+          </p>
+          <p>
+            Las resistencias de carbón son perfectas para prototipos y circuitos educativos gracias
+            a su bajo costo y buena estabilidad a temperatura ambiente. Con una tolerancia del 5%,
+            son adecuadas para la mayoría de aplicaciones donde no se requiere alta precisión.
+          </p>
+          <h3>¿Para qué sirven?</h3>
+          <p>
+            Perfectas para limitar corriente en LEDs, divisores de voltaje, filtros RC básicos,
+            circuitos de polarización de transistores y cualquier aplicación que requiera
+            resistencias de propósito general.
+          </p>
+        </div>
+
+        <!-- Panel Especificaciones -->
+        <div id="tab-specs" class="tab-panel"
+          role="tabpanel" aria-labelledby="tab-specs-btn" tabindex="0">
+          <h2 class="visually-hidden">Especificaciones técnicas completas</h2>
+          <!-- WCAG 1.3.1 - Tabla con scope correcto -->
+          <div class="table-wrapper" role="region" aria-label="Especificaciones técnicas" tabindex="0">
+            <table class="compare-table">
+              <caption>Especificaciones técnicas completas del kit de resistencias</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Parámetro</th>
+                  <th scope="col">Valor</th>
+                  <th scope="col">Unidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Potencia nominal</th><td>0.25</td><td>W</td></tr>
+                <tr><th scope="row">Tolerancia</th><td>±5</td><td>%</td></tr>
+                <tr><th scope="row">Rango de valores</th><td>10 — 1.000.000</td><td>Ω</td></tr>
+                <tr><th scope="row">Temperatura de operación</th><td>−55 a +155</td><td>°C</td></tr>
+                <tr><th scope="row">Coeficiente de temperatura</th><td>±200</td><td>ppm/°C</td></tr>
+                <tr><th scope="row">Tensión máxima</th><td>250</td><td>V</td></tr>
+                <tr><th scope="row">Cantidad de piezas</th><td>100</td><td>uds</td></tr>
+                <tr><th scope="row">Código de colores</th><td>4 bandas</td><td>—</td></tr>
+                <tr><th scope="row">Encapsulado</th><td>Through-hole (TH)</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Panel Reseñas -->
+        <div id="tab-reviews-panel" class="tab-panel"
+          role="tabpanel" aria-labelledby="tab-reviews-btn" tabindex="0">
+          <h2 style="margin-bottom: var(--space-6);">Opiniones de clientes</h2>
+
+          <!-- Resumen de calificaciones -->
+          <div style="display:flex; align-items:center; gap:var(--space-8); margin-bottom:var(--space-8); flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div style="font-size: var(--text-5xl); font-weight: var(--font-bold); color: var(--color-primary);"
+                aria-label="Calificación promedio: 4.5 de 5">4.5</div>
+              <div class="stars" aria-hidden="true" style="font-size:var(--text-xl);">★★★★½</div>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">128 reseñas</p>
+            </div>
+          </div>
+
+          <!-- Lista de reseñas (WCAG 1.3.1) -->
+          <ul class="reviews-list" aria-label="Reseñas de clientes">
+            <li class="review-item">
+              <div class="review-header">
+                <div>
+                  <h3 class="reviewer-name">Juan Rodríguez</h3>
+                  <div role="img" aria-label="Calificación: 5 de 5 estrellas">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                  </div>
+                </div>
+                <time class="review-date" datetime="2025-01-15">15 de enero de 2025</time>
+              </div>
+              <p class="review-text">
+                Excelente kit para empezar en electrónica. Los valores están bien surtidos,
+                el empaque mantiene todo organizado y llegó en 2 días. Muy recomendado.
+              </p>
+            </li>
+            <li class="review-item">
+              <div class="review-header">
+                <div>
+                  <h3 class="reviewer-name">María López</h3>
+                  <div role="img" aria-label="Calificación: 4 de 5 estrellas">
+                    <span class="stars" aria-hidden="true">★★★★☆</span>
+                  </div>
+                </div>
+                <time class="review-date" datetime="2025-01-08">8 de enero de 2025</time>
+              </div>
+              <p class="review-text">
+                Buena relación calidad-precio. Las resistencias son de carbón estándar,
+                cumplen perfectamente para proyectos educativos y prototipos.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Panel Datasheet -->
+        <div id="tab-datasheet" class="tab-panel"
+          role="tabpanel" aria-labelledby="tab-datasheet-btn" tabindex="0">
+          <h2 style="margin-bottom: var(--space-4);">Documentación técnica</h2>
+          <p>
+            Descarga el datasheet oficial con todas las características eléctricas,
+            mecánicas y de empaque de estas resistencias.
+          </p>
+          <!-- WCAG 1.3.1 - Enlace de descarga con información de tipo y tamaño -->
+          <a href="../assets/docs/resistencia-carbon-14W-datasheet.pdf"
+            class="btn btn-outline"
+            aria-label="Descargar datasheet Resistencias Carbón 1/4W en formato PDF, 2.4 megabytes"
+            download>
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Descargar Datasheet (PDF, 2.4 MB)
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PRODUCTOS RELACIONADOS -->
+    <section class="related-section" aria-labelledby="related-title">
+      <div class="container">
+        <h2 id="related-title" class="section-title">Productos relacionados</h2>
+        <ul class="products-grid" role="list" aria-label="Productos relacionados con este artículo">
+          <li class="product-card" aria-labelledby="rel1-name">
+            <article>
+              <div class="product-img-wrapper">
+                <img src="../assets/images/resistencia-metal.jpg"
+                  alt="Resistencia de película metálica 1% tolerancia, 100 unidades"
+                  width="300" height="200" loading="lazy" class="product-img" />
+              </div>
+              <div class="product-info">
+                <p class="product-category">Resistencias</p>
+                <h3 id="rel1-name" class="product-name">
+                  <a href="detalle-producto.html?id=2">Resistencia Metal Film 1% x100</a>
+                </h3>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $18.000">$18.000</span>
+                </div>
+                <button class="btn btn-primary btn-add-cart" data-product-id="rel1"
+                  aria-label="Agregar Resistencia Metal Film al carrito">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+          <li class="product-card" aria-labelledby="rel2-name">
+            <article>
+              <div class="product-img-wrapper">
+                <img src="../assets/images/potenciometro.jpg"
+                  alt="Potenciómetro lineal 10K ohms eje de 6mm"
+                  width="300" height="200" loading="lazy" class="product-img" />
+              </div>
+              <div class="product-info">
+                <p class="product-category">Resistencias</p>
+                <h3 id="rel2-name" class="product-name">
+                  <a href="detalle-producto.html?id=4">Potenciómetro Lineal 10K Ohms</a>
+                </h3>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $3.500">$3.500</span>
+                </div>
+                <button class="btn btn-primary btn-add-cart" data-product-id="rel2"
+                  aria-label="Agregar Potenciómetro Lineal 10K al carrito">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+          <li class="product-card" aria-labelledby="rel3-name">
+            <article>
+              <div class="product-img-wrapper">
+                <img src="../assets/images/resistencia-smd.jpg"
+                  alt="Resistencias SMD 0805 kit surtido 1000 piezas"
+                  width="300" height="200" loading="lazy" class="product-img" />
+                <span class="badge badge-popular" aria-label="Popular">Popular</span>
+              </div>
+              <div class="product-info">
+                <p class="product-category">Resistencias</p>
+                <h3 id="rel3-name" class="product-name">
+                  <a href="detalle-producto.html?id=3">Resistencias SMD 0805 Kit 1000pcs</a>
+                </h3>
+                <div class="product-price-group">
+                  <span class="product-price" aria-label="Precio: $32.000">$32.000</span>
+                </div>
+                <button class="btn btn-primary btn-add-cart" data-product-id="rel3"
+                  aria-label="Agregar Resistencias SMD 0805 al carrito">
+                  Agregar al carrito
+                </button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (mismo que el resto de páginas) -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="footer-logo" aria-label="ElectroParts - Inicio">
+          <span aria-hidden="true">⚡</span> ElectroParts
+        </a>
+        <p>Tu tienda de confianza para componentes electrónicos desde 2010.</p>
+        <address>
+          <p>Calle 45 #22-10, Bogotá, Colombia</p>
+          <p><a href="tel:+573001234567">+57 300 123 4567</a></p>
+          <p><a href="mailto:info@electroparts.com">info@electroparts.com</a></p>
+        </address>
+      </div>
+      <nav aria-label="Productos"><h3 class="footer-heading">Productos</h3>
+        <ul role="list">
+          <li><a href="productos.html?cat=resistencias">Resistencias</a></li>
+          <li><a href="productos.html?cat=capacitores">Capacitores</a></li>
+          <li><a href="productos.html?cat=transformadores">Transformadores</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda"><h3 class="footer-heading">Ayuda</h3>
+        <ul role="list">
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Política de envíos</a></li>
+          <li><a href="#">Soporte técnico</a></li>
+        </ul>
+      </nav>
+      <div class="footer-newsletter">
+        <h3 class="footer-heading">Newsletter</h3>
+        <form action="#" method="post" aria-label="Suscripción al newsletter">
+          <div class="newsletter-form">
+            <label for="nl-email-det" class="visually-hidden">Tu correo</label>
+            <input id="nl-email-det" type="email" name="email"
+              placeholder="tu@correo.com" required autocomplete="email" />
+            <button type="submit">Suscribir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container footer-bottom-inner">
+      <p><small>© 2025 ElectroParts. Todos los derechos reservados.</small></p>
+      <nav aria-label="Políticas legales"><ul role="list">
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Accesibilidad</a></li>
+      </ul></nav>
+    </div></div>
+  </footer>
+
+  <div id="notification-area" role="status" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+  <div id="alert-area" role="alert" aria-live="assertive" aria-atomic="true" class="visually-hidden"></div>
+
+  <script src="../js/accessibility.js"></script>
+  <script>
+    // Galería de imágenes
+    document.querySelectorAll('.thumb-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const mainImg = document.getElementById('main-img');
+        mainImg.src = btn.dataset.img;
+        mainImg.alt = btn.dataset.alt;
+        document.querySelectorAll('.thumb-btn').forEach(function(b) {
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    // Cantidad
+    const qtyInput = document.getElementById('qty-input');
+    document.getElementById('qty-minus').addEventListener('click', function() {
+      const v = parseInt(qtyInput.value);
+      if (v > 1) { qtyInput.value = v - 1; }
+    });
+    document.getElementById('qty-plus').addEventListener('click', function() {
+      const v = parseInt(qtyInput.value);
+      if (v < 100) { qtyInput.value = v + 1; }
+    });
+
+    // Tabs accesibles (WCAG 4.1.2)
+    const tabs   = document.querySelectorAll('[role="tab"]');
+    const panels = document.querySelectorAll('[role="tabpanel"]');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t)   { t.setAttribute('aria-selected','false'); });
+        panels.forEach(function(p) { p.classList.remove('is-active'); });
+        tab.setAttribute('aria-selected','true');
+        document.getElementById(tab.getAttribute('aria-controls')).classList.add('is-active');
+      });
+      // Flechas de teclado (WCAG 2.1.1)
+      tab.addEventListener('keydown', function(e) {
+        const idx = Array.from(tabs).indexOf(tab);
+        if (e.key === 'ArrowRight') { tabs[(idx+1) % tabs.length].focus(); tabs[(idx+1) % tabs.length].click(); }
+        if (e.key === 'ArrowLeft')  { tabs[(idx - 1 + tabs.length) % tabs.length].focus(); tabs[(idx - 1 + tabs.length) % tabs.length].click(); }
+      });
+    });
+  </script>
+</body>
+</html>

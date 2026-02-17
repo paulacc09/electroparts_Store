@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Catálogo completo de componentes electrónicos: resistencias, capacitores, transformadores, transistores, diodos y microcontroladores." />
+  <title>Productos | ElectroParts</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/accessibility.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* Estilos específicos de esta página */
+    .products-page-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    /* SIDEBAR FILTROS */
+    .filters-sidebar {
+      position: sticky;
+      top: 80px;
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .filters-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-bold);
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .filter-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .filter-group-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    /* WCAG 1.3.1 - Checkboxes con label asociado */
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+      cursor: pointer;
+    }
+
+    .filter-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      cursor: pointer;
+      accent-color: var(--color-primary);
+    }
+
+    .filter-option-label {
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      cursor: pointer;
+    }
+
+    .filter-count {
+      margin-left: auto;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      background: var(--color-bg-alt);
+      padding: 1px var(--space-2);
+      border-radius: var(--radius-full);
+    }
+
+    /* Rango de precio */
+    .price-range {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .price-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+
+    .price-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .price-input-group label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* TOOLBAR */
+    .products-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-md);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .results-count {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .results-count strong { color: var(--color-text); }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    /* WCAG 1.3.1 - Select con label */
+    .sort-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .sort-group label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    .sort-group select {
+      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-3);
+      min-height: 44px;
+      width: auto;
+    }
+
+    /* Vista grid/lista */
+    .view-toggle {
+      display: flex;
+      gap: var(--space-1);
+    }
+
+    .view-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      transition: all var(--transition-fast);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .view-btn.is-active,
+    .view-btn:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    /* TAGS activos */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(26,58,92,0.1);
+      color: var(--color-primary);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+    }
+
+    .filter-tag button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-full);
+      color: var(--color-primary);
+      transition: background var(--transition-fast);
+    }
+
+    .filter-tag button:hover { background: rgba(26,58,92,0.2); }
+
+    /* PAGINACIÓN (WCAG 2.4.1) */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-top: var(--space-10);
+    }
+
+    .page-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      padding: var(--space-2);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text);
+      text-decoration: none;
+      border: 1.5px solid var(--color-border);
+      transition: all var(--transition-fast);
+    }
+
+    .page-btn:hover {
+      background: var(--color-bg-alt);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .page-btn[aria-current="page"] {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* BREADCRUMB (WCAG 2.4.8) */
+    .breadcrumb {
+      padding: var(--space-4) 0;
+    }
+
+    .breadcrumb ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      list-style: none;
+      align-items: center;
+    }
+
+    .breadcrumb li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .breadcrumb li + li::before {
+      content: '/';
+      color: var(--color-text-light);
+    }
+
+    .breadcrumb a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .breadcrumb [aria-current="page"] {
+      color: var(--color-text);
+      font-weight: var(--font-medium);
+    }
+
+    /* Botón limpiar filtros */
+    .btn-clear {
+      font-size: var(--text-sm);
+      color: var(--color-error);
+      text-decoration: underline;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    @media (max-width: 900px) {
+      .products-page-layout {
+        grid-template-columns: 1fr;
+      }
+      .filters-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip links -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+  <a href="#main-nav" class="skip-link">Saltar a la navegación</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo" aria-label="ElectroParts - Inicio">
+        <span class="logo-text" aria-hidden="true">⚡</span>
+        <span>ElectroParts</span>
+      </a>
+      <div class="header-search" role="search">
+        <form action="productos.html" method="get" aria-label="Buscar productos">
+          <label for="search-input" class="visually-hidden">Buscar componentes electrónicos</label>
+          <input id="search-input" type="search" name="q"
+            placeholder="Buscar: resistencias, condensadores..."
+            autocomplete="off" aria-describedby="search-hint" />
+          <span id="search-hint" class="visually-hidden">Escribe el nombre del componente</span>
+          <button type="submit" aria-label="Ejecutar búsqueda">
+            <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div class="header-actions">
+        <a href="carrito.html" class="btn-cart" aria-label="Carrito de compras, 3 artículos">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" aria-live="polite" aria-atomic="true">3</span>
+        </a>
+        <button class="btn-menu" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+          <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav id="main-nav" class="main-nav" role="navigation" aria-label="Navegación principal">
+      <div class="container">
+        <ul class="nav-list" role="list">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="productos.html" aria-current="page">Categorías</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="../index.html#ofertas">Ofertas</a></li>
+          <li><a href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main-content" tabindex="-1">
+    <div class="container">
+
+      <!-- BREADCRUMB (WCAG 2.4.8) -->
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><span aria-current="page">Productos</span></li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title" style="margin-bottom: var(--space-2);">Catálogo de Productos</h1>
+      <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">
+        Más de 1.000 referencias en componentes electrónicos
+      </p>
+
+      <!-- FILTROS ACTIVOS -->
+      <div class="active-filters" id="active-filters" role="region" aria-label="Filtros activos" aria-live="polite">
+        <span class="filter-tag">
+          Resistencias
+          <button aria-label="Quitar filtro: Resistencias">
+            <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </span>
+        <button class="btn-clear" aria-label="Limpiar todos los filtros activos">Limpiar filtros</button>
+      </div>
+
+      <div class="products-page-layout">
+
+        <!-- SIDEBAR FILTROS -->
+        <aside aria-label="Filtros de productos">
+          <div class="filters-sidebar">
+            <h2 class="filters-title">Filtrar productos</h2>
+
+            <!-- WCAG 1.3.1 - Fieldset agrupa controles relacionados -->
+            <form action="productos.html" method="get" aria-label="Formulario de filtros">
+
+              <fieldset class="filter-group">
+                <legend class="filter-group-title">Categoría</legend>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="resistencias" checked />
+                  <span class="filter-option-label">Resistencias</span>
+                  <span class="filter-count" aria-label="240 productos">240</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="capacitores" />
+                  <span class="filter-option-label">Capacitores</span>
+                  <span class="filter-count" aria-label="185 productos">185</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="transformadores" />
+                  <span class="filter-option-label">Transformadores</span>
+                  <span class="filter-count" aria-label="98 productos">98</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="transistores" />
+                  <span class="filter-option-label">Transistores</span>
+                  <span class="filter-count" aria-label="320 productos">320</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="diodos" />
+                  <span class="filter-option-label">Diodos</span>
+                  <span class="filter-count" aria-label="210 productos">210</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="cat" value="microcontroladores" />
+                  <span class="filter-option-label">Microcontroladores</span>
+                  <span class="filter-count" aria-label="150 productos">150</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="filter-group">
+                <legend class="filter-group-title">Precio (COP)</legend>
+                <div class="price-range">
+                  <div class="price-inputs">
+                    <div class="price-input-group">
+                      <label for="price-min">Mínimo</label>
+                      <input id="price-min" type="number" name="price_min"
+                        min="0" max="500000" step="1000"
+                        placeholder="$0" aria-describedby="price-hint" />
+                    </div>
+                    <div class="price-input-group">
+                      <label for="price-max">Máximo</label>
+                      <input id="price-max" type="number" name="price_max"
+                        min="0" max="500000" step="1000"
+                        placeholder="$500.000" aria-describedby="price-hint" />
+                    </div>
+                  </div>
+                  <span id="price-hint" class="visually-hidden">Ingresa el rango de precio en pesos colombianos</span>
+                  <button type="submit" class="btn btn-outline" style="width:100%; font-size: var(--text-sm);">
+                    Aplicar rango
+                  </button>
+                </div>
+              </fieldset>
+
+              <fieldset class="filter-group">
+                <legend class="filter-group-title">Disponibilidad</legend>
+                <label class="filter-option">
+                  <input type="checkbox" name="stock" value="in_stock" checked />
+                  <span class="filter-option-label">En stock</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="stock" value="low_stock" />
+                  <span class="filter-option-label">Últimas unidades</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="filter-group">
+                <legend class="filter-group-title">Calificación</legend>
+                <label class="filter-option">
+                  <input type="checkbox" name="rating" value="5" />
+                  <span class="filter-option-label" aria-label="5 estrellas o más">★★★★★ (5)</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="rating" value="4" />
+                  <span class="filter-option-label" aria-label="4 estrellas o más">★★★★☆ (4+)</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" name="rating" value="3" />
+                  <span class="filter-option-label" aria-label="3 estrellas o más">★★★☆☆ (3+)</span>
+                </label>
+              </fieldset>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;">
+                Aplicar filtros
+              </button>
+
+            </form>
+          </div>
+        </aside>
+
+        <!-- ÁREA DE PRODUCTOS -->
+        <div>
+
+          <!-- TOOLBAR -->
+          <div class="products-toolbar" role="region" aria-label="Controles de ordenamiento y vista">
+            <p class="results-count" aria-live="polite" aria-atomic="true">
+              Mostrando <strong>1–12</strong> de <strong>240</strong> productos
+            </p>
+            <div class="toolbar-right">
+              <div class="sort-group">
+                <label for="sort-select">Ordenar por:</label>
+                <select id="sort-select" name="sort" aria-label="Ordenar productos por">
+                  <option value="relevance">Relevancia</option>
+                  <option value="price_asc">Precio: menor a mayor</option>
+                  <option value="price_desc">Precio: mayor a menor</option>
+                  <option value="rating">Mejor calificados</option>
+                  <option value="newest">Más nuevos</option>
+                </select>
+              </div>
+              <div class="view-toggle" role="group" aria-label="Cambiar vista de productos">
+                <button class="view-btn is-active" id="view-grid"
+                  aria-label="Vista en cuadrícula" aria-pressed="true">
+                  <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                  </svg>
+                </button>
+                <button class="view-btn" id="view-list"
+                  aria-label="Vista en lista" aria-pressed="false">
+                  <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRID DE PRODUCTOS -->
+          <ul class="products-grid" id="products-list" role="list" aria-label="Lista de productos">
+
+            <li class="product-card" aria-labelledby="p1-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/resistencia-carbon.jpg"
+                    alt="Kit de resistencias de carbón 1/4W, 100 piezas surtidas"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                  <span class="badge badge-new" aria-label="Nuevo">Nuevo</span>
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p1-name" class="product-name">
+                    <a href="detalle-producto.html?id=1">Resistencias Carbón 1/4W Kit 100 piezas</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="4.5 de 5 estrellas, 128 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★½</span>
+                    <span class="rating-count">(128)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $12.500">$12.500</span>
+                    <span class="product-price-old"><del aria-label="Precio anterior: $15.000">$15.000</del></span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar Resistencias Carbón Kit 100 piezas al carrito"
+                    data-product-id="1">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+            <li class="product-card" aria-labelledby="p2-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/resistencia-metal.jpg"
+                    alt="Resistencia de película metálica 1% tolerancia, 1/4W, 100 unidades"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p2-name" class="product-name">
+                    <a href="detalle-producto.html?id=2">Resistencia Metal Film 1% 1/4W x100</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="5 de 5 estrellas, 84 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <span class="rating-count">(84)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $18.000">$18.000</span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar Resistencia Metal Film al carrito"
+                    data-product-id="2">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+            <li class="product-card" aria-labelledby="p3-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/resistencia-smd.jpg"
+                    alt="Resistencias SMD 0805 kit surtido 1000 piezas en cinta"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                  <span class="badge badge-popular" aria-label="Popular">Popular</span>
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p3-name" class="product-name">
+                    <a href="detalle-producto.html?id=3">Resistencias SMD 0805 Kit 1000 piezas</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="4 de 5 estrellas, 210 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★☆</span>
+                    <span class="rating-count">(210)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $32.000">$32.000</span>
+                    <span class="product-price-old"><del aria-label="Precio anterior: $40.000">$40.000</del></span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar Resistencias SMD 0805 al carrito"
+                    data-product-id="3">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+            <li class="product-card" aria-labelledby="p4-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/potenciometro.jpg"
+                    alt="Potenciómetro lineal de 10K ohms, 3 terminales, eje de 6mm"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p4-name" class="product-name">
+                    <a href="detalle-producto.html?id=4">Potenciómetro Lineal 10K Ohms</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="4.5 de 5 estrellas, 56 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★½</span>
+                    <span class="rating-count">(56)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $3.500">$3.500</span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar Potenciómetro Lineal 10K al carrito"
+                    data-product-id="4">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+            <li class="product-card" aria-labelledby="p5-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/resistencia-potencia.jpg"
+                    alt="Resistencia de potencia 10W cuerpo de cerámica color beige"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p5-name" class="product-name">
+                    <a href="detalle-producto.html?id=5">Resistencia de Potencia Cerámica 10W</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="4 de 5 estrellas, 33 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★☆</span>
+                    <span class="rating-count">(33)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $8.000">$8.000</span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar Resistencia Potencia Cerámica 10W al carrito"
+                    data-product-id="5">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+            <li class="product-card" aria-labelledby="p6-name">
+              <article>
+                <div class="product-img-wrapper">
+                  <img src="../assets/images/ldr.jpg"
+                    alt="LDR fotorresistencia GL5528, sensible a la luz, 100 unidades"
+                    width="300" height="200" loading="lazy" class="product-img" />
+                  <span class="badge badge-sale" aria-label="Oferta">Oferta</span>
+                </div>
+                <div class="product-info">
+                  <p class="product-category">Resistencias</p>
+                  <h2 id="p6-name" class="product-name">
+                    <a href="detalle-producto.html?id=6">LDR Fotorresistencia GL5528 x100</a>
+                  </h2>
+                  <div class="product-rating" role="img" aria-label="5 de 5 estrellas, 97 opiniones">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <span class="rating-count">(97)</span>
+                  </div>
+                  <div class="product-price-group">
+                    <span class="product-price" aria-label="Precio: $22.000">$22.000</span>
+                    <span class="product-price-old"><del aria-label="Precio anterior: $28.000">$28.000</del></span>
+                  </div>
+                  <button class="btn btn-primary btn-add-cart"
+                    aria-label="Agregar LDR Fotorresistencia GL5528 al carrito"
+                    data-product-id="6">Agregar al carrito</button>
+                </div>
+              </article>
+            </li>
+
+          </ul>
+
+          <!-- PAGINACIÓN (WCAG 2.4.1 Navegación) -->
+          <nav class="pagination" aria-label="Paginación de productos">
+            <a href="#" class="page-btn" aria-label="Página anterior" aria-disabled="true">
+              <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+            </a>
+            <a href="?page=1" class="page-btn" aria-current="page" aria-label="Página 1, actual">1</a>
+            <a href="?page=2" class="page-btn" aria-label="Página 2">2</a>
+            <a href="?page=3" class="page-btn" aria-label="Página 3">3</a>
+            <span class="page-btn" aria-hidden="true">…</span>
+            <a href="?page=20" class="page-btn" aria-label="Página 20">20</a>
+            <a href="?page=2" class="page-btn" aria-label="Página siguiente">
+              <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </a>
+          </nav>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="footer-logo" aria-label="ElectroParts - Inicio">
+          <span aria-hidden="true">⚡</span> ElectroParts
+        </a>
+        <p>Tu tienda de confianza para componentes electrónicos desde 2010.</p>
+        <address>
+          <p>Calle 45 #22-10, Bogotá, Colombia</p>
+          <p><a href="tel:+573001234567">+57 300 123 4567</a></p>
+          <p><a href="mailto:info@electroparts.com">info@electroparts.com</a></p>
+        </address>
+      </div>
+      <nav aria-label="Productos">
+        <h3 class="footer-heading">Productos</h3>
+        <ul role="list">
+          <li><a href="productos.html?cat=resistencias">Resistencias</a></li>
+          <li><a href="productos.html?cat=capacitores">Capacitores</a></li>
+          <li><a href="productos.html?cat=transformadores">Transformadores</a></li>
+          <li><a href="productos.html?cat=transistores">Transistores</a></li>
+          <li><a href="productos.html?cat=diodos">Diodos</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda">
+        <h3 class="footer-heading">Ayuda</h3>
+        <ul role="list">
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Política de envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Soporte técnico</a></li>
+        </ul>
+      </nav>
+      <div class="footer-newsletter">
+        <h3 class="footer-heading">Newsletter</h3>
+        <p>Recibe ofertas exclusivas y novedades.</p>
+        <form action="#" method="post" aria-label="Suscripción al newsletter">
+          <div class="newsletter-form">
+            <label for="newsletter-email" class="visually-hidden">Tu correo electrónico</label>
+            <input id="newsletter-email" type="email" name="email"
+              placeholder="tu@correo.com" required autocomplete="email" aria-required="true" />
+            <button type="submit">Suscribir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p><small>© 2025 ElectroParts. Todos los derechos reservados.</small></p>
+        <nav aria-label="Políticas legales">
+          <ul role="list">
+            <li><a href="#">Términos y condiciones</a></li>
+            <li><a href="#">Política de privacidad</a></li>
+            <li><a href="#">Accesibilidad</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div id="notification-area" role="status" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+  <div id="alert-area" role="alert" aria-live="assertive" aria-atomic="true" class="visually-hidden"></div>
+
+  <script src="../js/accessibility.js"></script>
+  <script>
+    // Vista grid / lista
+    const btnGrid = document.getElementById('view-grid');
+    const btnList = document.getElementById('view-list');
+    const list    = document.getElementById('products-list');
+
+    btnGrid.addEventListener('click', function () {
+      list.classList.remove('products-list-view');
+      btnGrid.classList.add('is-active');    btnGrid.setAttribute('aria-pressed','true');
+      btnList.classList.remove('is-active'); btnList.setAttribute('aria-pressed','false');
+    });
+
+    btnList.addEventListener('click', function () {
+      list.classList.add('products-list-view');
+      btnList.classList.add('is-active');    btnList.setAttribute('aria-pressed','true');
+      btnGrid.classList.remove('is-active'); btnGrid.setAttribute('aria-pressed','false');
+    });
+  </script>
+</body>
+</html>
