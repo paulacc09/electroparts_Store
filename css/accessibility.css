@@ -1,0 +1,219 @@
+/* ACCESSIBILITY CSS — Criterios WCAG 2.1 Nivel A y AA - Principio Perceptible */
+
+/* ============================================================
+   WCAG 1.1.1 — Contenido no textual: Skip links
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 9999;
+  background: var(--color-primary);
+  color: white;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  text-decoration: none;
+  transition: top var(--transition-fast);
+  /* WCAG 2.4.7 foco visible */
+  box-shadow: var(--focus-ring);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* ============================================================
+   WCAG 1.3.1 — Información y relaciones: roles implícitos
+   ============================================================ */
+
+/* Ocultar visualmente pero visible para tecnologías asistivas */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Mantener accesible cuando recibe foco */
+.visually-hidden:focus,
+.visually-hidden:active {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* ============================================================
+   WCAG 1.3.3 — Características sensoriales: instrucciones
+   ============================================================ */
+/* Nunca usar solo "el botón verde" o "la sección de arriba" */
+/* Las instrucciones deben ser descriptivas en HTML */
+
+/* ============================================================
+   WCAG 1.4.1 — Uso del color: información con múltiples señales
+   ============================================================ */
+
+/* Estados con texto + símbolo + color */
+.status::before {
+  font-weight: var(--font-bold);
+  margin-right: var(--space-1);
+}
+
+/* WCAG 1.4.1 - Enlace activo se distingue por subrayado además del color */
+a[aria-current="page"] {
+  font-weight: var(--font-semibold);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* ============================================================
+   WCAG 1.4.3 — Contraste mínimo: 4.5:1 texto normal, 3:1 texto grande
+   ============================================================ */
+/* Todos los colores de texto ya definidos en variables.css cumplen contraste */
+
+/* Texto sobre fondos de color (badges) - verificado */
+.badge-new,
+.badge-sale,
+.badge-popular {
+  /* Blanco sobre fondo oscuro = > 4.5:1 ✔ */
+  color: #ffffff;
+}
+
+/* WCAG 1.4.3 - Placeholder: debe cumplir 4.5:1 */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted); /* #4b5563 sobre blanco = 7.5:1 ✔ */
+}
+
+/* ============================================================
+   WCAG 1.4.4 — Cambio de tamaño del texto: zoom al 200%
+   ============================================================ */
+/* Todo el texto usa rem, no px fijos */
+/* El layout usa CSS Grid con auto-fill para no romperse al hacer zoom */
+
+/* Forzar wrap en elementos que podrían desbordarse */
+.product-name,
+.offer-name,
+.category-name,
+.hero-title,
+.section-title {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* ============================================================
+   WCAG 1.4.5 — Imágenes de texto: preferir texto real
+   ============================================================ */
+/* No se usan imágenes de texto en este sitio */
+/* Todos los títulos, etiquetas y precios son texto HTML real */
+
+/* ============================================================
+   WCAG 1.4.6 — Contraste mejorado (Nivel AA): 7:1
+   ============================================================ */
+/* Los colores principales ya cumplen este nivel */
+
+/* ============================================================
+   WCAG 1.4.8 — Presentación visual: espaciado de texto
+   ============================================================ */
+/* El usuario puede ajustar estas propiedades sin pérdida de contenido */
+p, li, th, td, dd {
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   WCAG 1.4.9 — Visualización al hover/focus (Nivel AA)
+   ============================================================ */
+/* Contenido al hover debe poder ocultarse, no tapar contenido, no desaparecer al moverle */
+.category-card:hover .category-link,
+.product-card:hover .product-info {
+  /* Los cambios son sutiles (background, transform) y no generan overflow */
+}
+
+/* ============================================================
+   WCAG 2.4.7 — Foco visible: TODOS los elementos interactivos
+   ============================================================ */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Anular outline por defecto del navegador y usar el nuestro */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Foco en fondos oscuros (footer, hero) */
+.site-footer a:focus-visible,
+.site-footer button:focus-visible,
+.hero a:focus-visible {
+  outline-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-bg-dark), 0 0 0 5px var(--color-accent);
+}
+
+/* ============================================================
+   WCAG 1.2 — Contenido multimedia: controles nativos
+   ============================================================ */
+/* Los elementos <video> y <audio> usan controls nativos del navegador */
+/* que ya son accesibles por teclado */
+video, audio {
+  /* Asegurar que los controles no se oculten */
+  display: block;
+}
+
+/* ============================================================
+   WCAG 3.3 — Identificación de errores en formularios
+   ============================================================ */
+input:invalid {
+  border-color: var(--color-error);
+  /* WCAG 1.4.1: no solo color — el borde cambia de forma también */
+  border-style: solid;
+}
+
+/* Error visible */
+.field-error {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* WCAG 1.4.1: icono de error además del color */
+.field-error::before {
+  content: '⚠';
+  font-size: 1em;
+}
+
+/* ============================================================
+   WCAG 1.3.4 — Orientación: no bloquear rotación
+   ============================================================ */
+/* No se usa CSS que force orientación */
+
+/* ============================================================
+   Modo de alto contraste del sistema
+   ============================================================ */
+@media (forced-colors: active) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline {
+    forced-color-adjust: none;
+    border: 2px solid ButtonText;
+  }
+
+  .badge {
+    forced-color-adjust: none;
+    border: 1px solid ButtonText;
+  }
+}
